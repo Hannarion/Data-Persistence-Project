@@ -22,6 +22,7 @@ public class MainManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
         const float step = 0.6f;
         int perLine = Mathf.FloorToInt(4.0f / step);
         
@@ -71,6 +72,11 @@ public class MainManager : MonoBehaviour
     public void GameOver()
     {
         m_GameOver = true;
+        if (m_Points > DataSave.Instance.bestScore)
+        {
+            DataSave.Instance.bestScore = m_Points;
+            DataSave.Instance.SaveScoreText();
+        }
         GameOverText.SetActive(true);
     }
 }
