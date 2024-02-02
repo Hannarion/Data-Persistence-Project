@@ -9,8 +9,9 @@ using UnityEngine.UI;
 public class DataSave : MonoBehaviour
 {
     public static DataSave Instance;
-    public TextMeshProUGUI playerScore;
     public string playerName;
+
+    public string bestName;
     public int bestScore;
     
     private void Awake()
@@ -28,20 +29,21 @@ public class DataSave : MonoBehaviour
 [System.Serializable]
     class SaveData
     {
-        public TextMeshProUGUI playerScore;
+        public string bestName;
         public int bestScore;
     }
 
     public void SaveScoreText()
     {
-        playerScore.text = "Best Score: " + playerName + ": " + bestScore;
+
         SaveData data = new SaveData();
-        data.playerScore = playerScore;
+        data.bestName = bestName;
         data.bestScore = bestScore;
 
         string json = JsonUtility.ToJson(data);
   
         File.WriteAllText(Application.persistentDataPath + "/savefile.json", json);
+        Debug.Log("Fichié enregistré");
     }
 
     public void LoadScoreText()
@@ -49,10 +51,11 @@ public class DataSave : MonoBehaviour
         string path = Application.persistentDataPath + "/savefile.json";
         if (File.Exists(path))
     {
+        Debug.Log("fichié existant");
         string json = File.ReadAllText(path);
         SaveData data = JsonUtility.FromJson<SaveData>(json);
 
-        playerScore = data.playerScore;
+        bestName = data.bestName;
         bestScore = data.bestScore;
     }
     }

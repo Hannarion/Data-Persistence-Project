@@ -12,14 +12,15 @@ using UnityEditor;
 [DefaultExecutionOrder(1000)]
 public class MenuUiHandler : MonoBehaviour
 {
-    public TextMeshProUGUI playerScore;
+    public Text playerScore;
     public string playerName;
-    public TextMeshProUGUI nameText;
+    public string nameText;
    
-   void start()
+   void Start()
    {
         DataSave.Instance.LoadScoreText();
-        playerScore = DataSave.Instance.playerScore;
+        Debug.Log("fichié en chargement");
+        playerScore.text = "Best Score: " + DataSave.Instance.bestName + ": " + DataSave.Instance.bestScore;
    }
 
     public void ReadStringInput(string s)
